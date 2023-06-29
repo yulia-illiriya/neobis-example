@@ -1,3 +1,30 @@
 from django.db import models
 
-# Create your models here.
+class Price(models.Model):
+    amount = models.DecimalField("Стоимость", max_digits=9, decimal_places=2)
+    is_active = models.BooleanField("Актуальна ли?", default=True)
+    
+    def __str__(self) -> str:
+        return f"{self.amount}"
+    
+    class Meta:
+        verbose_name = "Цена"
+        verbose_name = "Цены"
+        
+class Photo(models.Model):
+    photo_url = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
+
+class Product(models.Model):
+    name_of_product = models.CharField("Product", max_length=100)
+    short_description = models.CharField("Shorts", max_length=250)
+    description = models.TextField("Full description")
+    created_at = models.DateTimeField("Запись создана", auto_now_add=True)
+    updated_at = models.DateTimeField("Запись обновлена", auto_now_add=True)
+    price = models.ForeignKey(Price, related_name="product", on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return self.name_of_product
+    
+    class Meta:
+        verbose_name = "Товар"
+        verbose_name_plural = "Товары"
