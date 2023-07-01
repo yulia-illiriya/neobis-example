@@ -2,7 +2,9 @@ from django.db import models
 from profile_user.managers import UserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _ 
+from config import settings
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('username'), max_length=255, unique=True)
@@ -22,3 +24,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
         unique_together = ('username', 'email', 'phone')
+        
+        
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    name = models.CharField("Имя", max_length=500)
+    surname = models.CharField("Фамилия", max_length=500)
+    is_verified = models.BooleanField(_('verified'), default=False)
+        
+
+    def __str__(self):
+        return f"{self.name} {self.surname}"
