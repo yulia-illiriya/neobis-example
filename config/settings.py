@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     
     'djoser',
     'rest_framework',
+    'rest_framework.authtoken',
     
     'profile_user',
     'product',
@@ -121,15 +122,25 @@ AUTH_USER_MODEL = 'profile_user.User'
 # DJOSER
 DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'SEND_ACTIVATION_EMAIL': True,
-    'SET_PASSWORD_RETYPE': True,
+    'SEND_ACTIVATION_EMAIL': False,
+    'SET_PASSWORD_RETYPE': False,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    'TOKEN_MODEL': None,  # We use only JWT
+    # 'TOKEN_MODEL': None,  # We use only JWT
     'ACTIVATION_URL': 'auth/verify/{uid}/{token}/',
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+# DJOSER = {
+#     'USER_MODEL': 'profile_user.User',  
+#     'SERIALIZERS': {
+#         'user': 'profile_user.serializers.UserAPISerializer',
+#         'user_create': 'profile_user.serializers.UserCreateAPISerializer',
+#         'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+#         'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+#         'ACTIVATION_URL': '#/activate/{uid}/{token}',
+#         'SEND_ACTIVATION_EMAIL': False,        
+# }
+# }
+
 
 LANGUAGE_CODE = 'en-us'
 

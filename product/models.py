@@ -30,6 +30,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField("Запись обновлена", auto_now_add=True)
     price = models.ForeignKey(Price, related_name="product", on_delete=models.SET_NULL, null=True)
     amount_of_likes = models.PositiveBigIntegerField("Нравится", default=0)
+    photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.name_of_product
