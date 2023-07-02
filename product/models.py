@@ -3,11 +3,25 @@ from profile_user.models import User
 
 
 class Price(models.Model):
+    SOM = "KG"
+    DOLLAR = "USD"
+    EURO = "EU"
+    RUBL = "RU"
+    
+    CURRENCY_CHOICES = [
+        (SOM, "KG"),
+        (DOLLAR, "USD"),
+        (EURO,"EU"),
+        (RUBL,"RU"),
+        
+    ]
+    
     amount = models.DecimalField("Стоимость", max_digits=9, decimal_places=2)
+    currency = models.CharField("Валюта", max_length=3, choices=CURRENCY_CHOICES, default=SOM)
     is_active = models.BooleanField("Актуальна ли?", default=True)
     
     def __str__(self) -> str:
-        return f"{self.amount}"
+        return f"{self.amount} {self.currency}"
     
     class Meta:
         verbose_name = "Цена"
@@ -30,7 +44,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField("Запись обновлена", auto_now_add=True)
     price = models.ForeignKey(Price, related_name="product", on_delete=models.SET_NULL, null=True)
     amount_of_likes = models.PositiveBigIntegerField("Нравится", default=0)
-    photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True)
+    photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return self.name_of_product

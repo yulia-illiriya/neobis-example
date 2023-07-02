@@ -18,7 +18,8 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     price = PriceSerializer()
-    photo = PhotoSerializer()   
+    photo = PhotoSerializer()
+    amount_of_likes = serializers.ReadOnlyField()   
     
     class Meta:
         model = Product
