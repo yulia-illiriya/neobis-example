@@ -44,6 +44,9 @@ class Likes(models.Model):
     class Meta:
         verbose_name = "Лайк"
         verbose_name_plural = "Лайки"
+        
+    def unlike(self):
+        self.delete()
     
 
 class Product(models.Model):
