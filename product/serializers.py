@@ -6,7 +6,7 @@ class PriceSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Price
-        fields = ['id', 'amount']
+        fields = ['amount', "currency"]
         
         
 class PhotoSerializer(serializers.ModelSerializer):
@@ -15,11 +15,20 @@ class PhotoSerializer(serializers.ModelSerializer):
         model = Photo
         fields = "__all__"
         
+        
+class LikeSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Likes
+        fields = ('is_liked',)
+        
 
 class ProductSerializer(serializers.ModelSerializer):
     price = PriceSerializer()
     photo = PhotoSerializer()
-    amount_of_likes = serializers.ReadOnlyField()   
+    likes = LikeSerializer()
+    amount_of_likes = serializers.ReadOnlyField()
+   
     
     class Meta:
         model = Product
@@ -29,7 +38,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'description', 
             'created_at',  
             'updated_at', 
-            'price', 
+            'price',
             'amount_of_likes',
             'photo',
+            'likes',
             ]

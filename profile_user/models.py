@@ -10,6 +10,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('username'), max_length=255, unique=True)
     email = models.EmailField(_('email address'), null=True, blank=True)
     phone = models.CharField(_('phone number'), max_length=30, null=True, blank=True)
+    name = models.CharField("Имя", max_length=500, null=True, blank=True)
+    surname = models.CharField("Фамилия", max_length=500, null=True, blank=True)
     is_active = models.BooleanField(_('active'), default=False)
     is_staff = models.BooleanField(_('staff'), default=False)
 

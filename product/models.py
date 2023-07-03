@@ -25,7 +25,7 @@ class Price(models.Model):
     
     class Meta:
         verbose_name = "Цена"
-        verbose_name = "Цены"
+        verbose_name_plural = "Цены"
         
         
 class Photo(models.Model):
@@ -36,15 +36,26 @@ class Photo(models.Model):
         return self.title
     
 
+class Likes(models.Model):
+    is_liked = models.BooleanField("Понравилось", default=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name="like")
+    
+    class Meta:
+        verbose_name = "Лайк"
+        verbose_name_plural = "Лайки"
+    
+
 class Product(models.Model):
     name_of_product = models.CharField("Product", max_length=100)
     short_description = models.CharField("Shorts", max_length=250)
     description = models.TextField("Full description")
     created_at = models.DateTimeField("Запись создана", auto_now_add=True)
-    updated_at = models.DateTimeField("Запись обновлена", auto_now_add=True)
+    updated_at = models.DateTimeField("Запись обновлена", auto_now=True)
     price = models.ForeignKey(Price, related_name="product", on_delete=models.SET_NULL, null=True)
     amount_of_likes = models.PositiveBigIntegerField("Нравится", default=0)
     photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True)
+    likes = models.ManyToManyField(User, through='Likes', related_name="liked_products", default=None)
     
     def __str__(self):
         return self.name_of_product
@@ -52,18 +63,8 @@ class Product(models.Model):
     class Meta:
         ordering = ('name_of_product',)
         verbose_name = "Товар"
-        verbose_name_plural = "Товары"
-        
-        
-class Likes(models.Model):
-    is_liked = models.BooleanField("Понравилось", default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    
-    class Meta:
-        verbose_name = "Лайк"
-        verbose_name_plural = "Лайки"
-        
+        verbose_name_plural = "Товары"    
+                
 
 class Basket(models.Model):
     product = models.ForeignKey(Product, related_name="basket", on_delete=models.CASCADE)
