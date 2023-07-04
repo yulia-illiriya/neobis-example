@@ -38,7 +38,7 @@ def verify_code(request):
             .create(to=phone_number, code=verification_code)
 
         if verification_check.status == 'approved':
-            # Код верификации прошел успешно
+            
             user = request.user
             user.is_verified_by_phone = True
             user.save()
@@ -49,3 +49,10 @@ def verify_code(request):
     except Exception as e:
         # Ошибка при проверке кода верификации
         return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    
+def verify_user(request):
+    user = request.user
+
+    if user.is_verified == False:
+        return redirect('send_verification_code')

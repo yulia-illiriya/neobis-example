@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import SendVerificationCodeView, VerifyCodeView
+from .services import *
+
 
 urlpatterns = [
-    path('verify-phone/', SendVerificationCodeView.as_view(), name='send_verification_code'),
-    path('verify-code/', VerifyCodeView.as_view(), name="verify-code")
+    path('send-verification-code/', send_verification_code, name='send_verification_code'),
+    path('verify-code/', verify_code, name="verify_code"),
+    path('verify-user/', verify_user, name="verify_user"),
 ]

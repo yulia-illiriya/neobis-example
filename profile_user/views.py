@@ -9,3 +9,4 @@ class SendVerificationCodeView(View):
 class VerifyCodeView(View):
     def post(self, request):
         return verify_code(request)
+

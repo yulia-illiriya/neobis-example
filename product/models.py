@@ -59,6 +59,7 @@ class Product(models.Model):
     amount_of_likes = models.PositiveBigIntegerField("Нравится", default=0)
     photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True)
     likes = models.ManyToManyField(User, through='Likes', related_name="liked_products", default=None)
+    who_added = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users_product', verbose_name="Кем добавлен", default=1)
     
     def __str__(self):
         return self.name_of_product

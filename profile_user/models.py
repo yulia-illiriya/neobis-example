@@ -34,7 +34,8 @@ class UserProfile(models.Model):
     )
     name = models.CharField("Имя", max_length=500)
     surname = models.CharField("Фамилия", max_length=500)
-    is_verified = models.BooleanField(_('verified'), default=False)
+    phone = models.CharField(_('Номер телефона'), max_length=30, null=True, blank=True)
+    is_verified = models.BooleanField(_('Статус верификации'), default=False)
         
 
     def __str__(self):
