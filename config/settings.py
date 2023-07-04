@@ -28,7 +28,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['159.65.210.48',]
 
 
 # Application definition
@@ -40,13 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'djoser',
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
     'django_twilio',
-    
+
     'profile_user',
     'product',
 ]
@@ -145,14 +145,14 @@ DJOSER = {
 }
 
 # DJOSER = {
-#     'USER_MODEL': 'profile_user.User',  
+#     'USER_MODEL': 'profile_user.User',
 #     'SERIALIZERS': {
 #         'user': 'profile_user.serializers.UserAPISerializer',
 #         'user_create': 'profile_user.serializers.UserCreateAPISerializer',
 #         'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
 #         'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
 #         'ACTIVATION_URL': '#/activate/{uid}/{token}',
-#         'SEND_ACTIVATION_EMAIL': False,        
+#         'SEND_ACTIVATION_EMAIL': False,
 # }
 # }
 
@@ -180,3 +180,8 @@ TWILIO_ACCOUNT_SID = env.str("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = env.str("TWILIO_AUTH_TOKEN")
 TWILIO_VERIFY_SERVICE_SID = env.str('TWILIO_VERIFY_SERVICE_SID')
 
+CORS_ALLOWED_ORIGINS = [
+    'https://159.65.210.48',
+]
+
+CSRF_TRUSTED_ORIGINS = ['https://159.65.210.48']
