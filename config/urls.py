@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .yasg import urlpatterns as swagger_urls
+from djoser import views as djoser_views
+from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    path('auth/users/', djoser_views.UserViewSet.as_view({'post': 'create'}), name='user_create'),  # Регистрация пользователя
+    path('auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),  # Обновление токена
     path('product/', include('product.urls')),
     path('profile/', include('profile_user.urls'))
 ]

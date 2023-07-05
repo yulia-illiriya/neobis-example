@@ -36,6 +36,7 @@ class UserProfile(models.Model):
     surname = models.CharField("Фамилия", max_length=500)
     phone = models.CharField(_('Номер телефона'), max_length=30, null=True, blank=True)
     is_verified = models.BooleanField(_('Статус верификации'), default=False)
+    photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
         
 
     def __str__(self):

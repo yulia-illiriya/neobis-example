@@ -139,9 +139,9 @@ DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SEND_ACTIVATION_EMAIL': False,
     'SET_PASSWORD_RETYPE': False,
-    'PASSWORD_RESET_CONFIRM_RETYPE': True,
-    # 'TOKEN_MODEL': None,  # We use only JWT
-    'ACTIVATION_URL': 'auth/verify/{uid}/{token}/',
+    'PASSWORD_RESET_CONFIRM_RETYPE': False,
+    'TOKEN_MODEL': None,  # We use only JWT
+    # 'ACTIVATION_URL': 'auth/verify/{uid}/{token}/',
 }
 
 # DJOSER = {

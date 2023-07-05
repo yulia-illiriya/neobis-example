@@ -3,9 +3,11 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from twilio.rest import Client
 from django.contrib.auth import get_user_model
+from rest_framework.decorators import api_view
 
 User = get_user_model()
 
+@api_view(['POST'])
 def send_verification_code(request):
     phone_number = request.POST.get('phone_number')
 
@@ -24,7 +26,7 @@ def send_verification_code(request):
         return JsonResponse({'status': 'error', 'message': 'Failed to send verification code'})
 
     
-
+@api_view(['POST'])
 def verify_code(request):
     phone_number = request.session.get('phone_number')
     verification_code = request.POST.get('verification_code')
@@ -50,7 +52,7 @@ def verify_code(request):
         # Ошибка при проверке кода верификации
         return JsonResponse({'status': 'error', 'message': str(e)})
     
-    
+@api_view(['POST'])
 def verify_user(request):
     user = request.user
 
