@@ -4,11 +4,14 @@ from django.shortcuts import redirect
 from twilio.rest import Client
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
+from .models import UserProfile
 
 User = get_user_model()
 
 @api_view(['POST'])
 def send_verification_code(request):
+    """Отправить код для верификации номера"""
+    
     phone_number = request.POST.get('phone_number')
 
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
@@ -28,6 +31,8 @@ def send_verification_code(request):
     
 @api_view(['POST'])
 def verify_code(request):
+    """Сравнить код с полученным"""
+    
     phone_number = request.session.get('phone_number')
     verification_code = request.POST.get('verification_code')
 
@@ -44,6 +49,10 @@ def verify_code(request):
             user = request.user
             user.is_verified_by_phone = True
             user.save()
+            user_profile = UserProfile.objects.get(user=user)
+            user_profile.is_verified = True
+            user_profile.save()
+            
             return JsonResponse({'status': 'success', 'message': 'Verification code is valid'})
         else:
             # Код верификации неверен
@@ -54,6 +63,7 @@ def verify_code(request):
     
 @api_view(['POST'])
 def verify_user(request):
+    """проверка, верифицирован ли юзер"""
     user = request.user
 
     if user.is_verified == False:
