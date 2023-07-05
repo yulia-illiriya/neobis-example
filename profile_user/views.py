@@ -11,7 +11,8 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import logout
+from .backend import AuthBackend
 from django.shortcuts import redirect
 
 from .models import UserProfile
@@ -29,22 +30,24 @@ class VerifyCodeView(View):
         return verify_code(request)
     
 
-@api_view(['POST'])
-def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
+# @api_view(['POST'])
+# def login(request):
+#     username = request.data.get('username')
+#     password = request.data.get('password')
 
-    user = authenticate(username=username, password=password)
+#     user = AuthBackend().authenticate(request=request, username=username, password=password)
+    
+#     print(username, password, user)
 
-    if user:
-        refresh = RefreshToken.for_user(user)
-        response_data = {'access_token': str(refresh.access_token)}
-        return redirect('profile')  # Редирект на профиль пользователя
-    else:
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+#     if user:
+#         refresh = RefreshToken.for_user(user)
+#         response_data = {'access_token': str(refresh.access_token)}
+#         return redirect('profile')  # Редирект на профиль пользователя
+#     else:
+#         return Response({'error': 'Invalid credentials', 'username': username, 'password': password}, status=status.HTTP_401_UNAUTHORIZED)
     
     
-class UserProfileDetailAPIView(generics.RetrieveUpdateAPIView):
+class UserProfileAPIView(generics.RetrieveUpdateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
