@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
@@ -10,20 +10,27 @@ from .serializers import ProductSerializer
 from .models import Likes
 from .permissions import IsVerifiedOrReadOnly
  
-
+@swagger_auto_schema(tags=["Categories"])
 class ProductListCreateView(generics.ListCreateAPIView):
-    permission_classes = [IsVerifiedOrReadOnly, IsAuthenticated]
+    """Смотрим список всех товаров"""
+    
+    permission_classes = [IsVerifiedOrReadOnly,]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
-
+@swagger_auto_schema(tags=["Categories"])
 class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsVerifiedOrReadOnly, IsAuthenticated]
+    """просто смотрим все товары детально"""
+    
+    permission_classes = [IsVerifiedOrReadOnly,]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     
     
 class UserProductsView(generics.ListCreateAPIView):
+    
+    """просматриваем весь список товаров, добавленных этим юзером"""
+    
     permission_classes = [IsVerifiedOrReadOnly, IsAuthenticated]
     serializer_class = ProductSerializer
 
@@ -33,6 +40,9 @@ class UserProductsView(generics.ListCreateAPIView):
     
 
 class UserProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    
+    """Просматриваем, что именно добавлял юзер, его товары. Или удаляем"""
+    
     permission_classes = [IsVerifiedOrReadOnly, IsAuthenticated]
     serializer_class = ProductSerializer
 

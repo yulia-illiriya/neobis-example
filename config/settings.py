@@ -28,7 +28,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['159.65.210.48',]
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -180,9 +180,5 @@ TWILIO_ACCOUNT_SID = env.str("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = env.str("TWILIO_AUTH_TOKEN")
 TWILIO_VERIFY_SERVICE_SID = env.str('TWILIO_VERIFY_SERVICE_SID')
 
-CORS_ALLOWED_ORIGINS = [
-    'https://159.65.210.48',
-    'http://159.65.210.48'
-]
-
-CSRF_TRUSTED_ORIGINS = ['https://159.65.210.48', 'http://159.65.210.48']
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
