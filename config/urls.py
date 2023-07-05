@@ -23,12 +23,12 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/users/', djoser_views.UserViewSet.as_view({'post': 'create'}), name='user_create'),  # Регистрация пользователя
-    path('auth/login/', TokenObtainPairView.as_view(), name='login'),
-    path('auth/logout/', djoser_views.TokenDestroyView.as_view(), name='logout'),
-    path('auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/v1/', include('product.urls')),
-    path('api/v1/', include('profile_user.urls'))
+    path('authentication/users/', djoser_views.UserViewSet.as_view({'post': 'create'}), name='user_create'),
+    path('authentication/login/', TokenObtainPairView.as_view(), name='login'),
+    path('authentication/logout/', djoser_views.TokenDestroyView.as_view(), name='logout'),
+    path('authentication/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('product/v1/', include('product.urls')),
+    path('authentication/', include('profile_user.urls'))
 ]
 
 urlpatterns += swagger_urls

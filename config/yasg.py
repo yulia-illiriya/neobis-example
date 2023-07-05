@@ -19,17 +19,6 @@ schema_view = get_schema_view(
 )
 
 
-class CustomAutoSchema(SwaggerAutoSchema):
-    def get_tags(self, operation_keys=None):
-        if self.method == 'POST' and 'users' in self.path:
-            return ['Users']
-        if self.method in ['GET', 'PUT', 'PATCH', 'DELETE']:
-            if 'auth' in self.path:
-                return ['Authentication']
-            if 'product' in self.path:
-                return ['Categories']
-        return []
-
 
 urlpatterns = [    
     path('swagger/', schema_view.with_ui('swagger'), name='swagger'),
