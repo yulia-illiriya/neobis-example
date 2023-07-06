@@ -12,7 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(_('phone number'), max_length=30, null=True, blank=True)
     name = models.CharField("Имя", max_length=500, null=True, blank=True)
     surname = models.CharField("Фамилия", max_length=500, null=True, blank=True)
-    is_active = models.BooleanField(_('active'), default=False)
+    is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
 
     is_verified_by_phone = models.BooleanField(_('verified'), default=False)
