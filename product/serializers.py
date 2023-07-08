@@ -27,13 +27,13 @@ class ProductSerializer(serializers.ModelSerializer):
     price = PriceSerializer()
     photo = PhotoSerializer(many=True)
     amount_of_likes = serializers.ReadOnlyField()
-    
+        
     def create(self, validated_data):
         price_data = validated_data.pop('price', None)
         photo_data = validated_data.pop('photo', None)
         likes_data = validated_data.pop('likes', None)
 
-        product = Product.objects.create(**validated_data)
+        product = Product.objects.create(who_added=self.context['request'].user, **validated_data)
 
         if price_data:
             price, _ = Price.objects.get_or_create(product=product, **price_data)
@@ -71,4 +71,5 @@ class ProductSerializer(serializers.ModelSerializer):
             'photo',
             'created_at',  
             'updated_at', 
+            'who_added',
             ]
